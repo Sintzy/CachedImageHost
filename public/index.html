@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="icon" type="image/x-icon" href="img/icon.png">
+    <meta name="description" content="files">
+    <meta property="og:title" content="Anonymous File Uploader">
+    <meta property="og:description" content="The best File Uploader service">
+    <meta property="og:url" content="index.html">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#060606">
+
+    <title>cached - main page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="img/logotipo.png" alt="Logotipo">
+        </div>
+        <div class="form-container">
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" style="display: none;" onchange="document.getElementById('uploadForm').submit();">
+                <button type="button" class="upload-button" onclick="document.getElementById('file').click();">Upload File</button>
+                <a class="textopequeno5">2gb max </a>
+            </form>
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+            <div class="spacer"></div>
+            <hr>
+            <div class="spacer"></div>
+            <div>
+                <a class="white shadow" href="whatiscached">What is cached?</a><a class="white shadow"> ・ </a>
+                <a class="white shadow" href="download">Download a File</a><a class="white shadow"> ・ </a>
+                <a class="white shadow" href="https://discord.gg/discord">Discord</a><a class="white shadow"> ・ </a>
+                <a class="white shadow" href="tos">TOS</a><a class="white shadow"> ・ </a>
+                <a class="white shadow" href="https://forms.gle/pvft1KcRLFc1BWRw8">Report</a>
+                
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            if (document.getElementById('file').files.length === 0) {
+                event.preventDefault(); // Prevent form submission
+                alert("Please select a file.");
+            }
+        });
+
+        const uploadForm = document.getElementById('uploadForm');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+
+        uploadForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(uploadForm);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+
+            xhr.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    const percentComplete = (e.loaded / e.total) * 100;
+                    progressContainer.style.display = 'block';
+                    progressBar.style.width = percentComplete + '%';
+                    progressBar.textContent = Math.round(percentComplete) + '%';
+                }
+            };
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    window.location.href = xhr.responseURL;
+                } else {
+                    alert('Falha no upload do arquivo.');
+                }
+            };
+
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>

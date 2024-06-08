@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="icon" type="image/x-icon" href="img/icon.png">
+    <meta name="description" content="files">
+    <meta property="og:title" content="Anonymous File Uploader">
+    <meta property="og:description" content="The best File Uploader service">
+    <meta property="og:url" content="index.html">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#060606">
+
+    <title>cached - upload success</title>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="img/logotipo.png" alt="Logotipo">
+        </div>
+        <div class="form-container">
+            <a>The 5-digit identification code of your file is:</a>
+            <p id="code"></p>
+            <div class="spacer"></div>
+            <hr>
+            <div class="spacer"></div>
+            <div>
+                <a class="white shadow" href="/">Home</a>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        document.getElementById('code').innerText = code;
+    </script>
+</body>
+</html>
